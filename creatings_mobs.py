@@ -17,7 +17,7 @@ class Hero:
         self.dmg_type = dmg_type
         self.hp = hp
         self.weak = weak
-        self.pick = 0  # Номер героя, выбранный игроком
+        self.pick = 0  # Номер героя, для выбора игроком
         self.resist = resist
 
 
@@ -60,11 +60,11 @@ dragon_of_inferno = Mob("Dragon Of Inferno", 40, ["Fire"], 650, "Frostbane", ["S
 # Добавьте других мобов после необходимости
 
 # Выбор героев
-heroes = [warrior, archer]
+heroes = [warrior]
 pick = 0
 for hero in heroes:
     pick += 1
     hero.pick = pick  # Присваиваем каждому герою уникальный номер
 
 # Рюкзак героев
-heroes_items = ["Heal Poison", "Damage Poison", "Strength Poison"]
+heroes_items = []

@@ -22,21 +22,23 @@ def round_start(enemy):
     damage_type = ""
 
     while True:
-        curr_hero = input("Pick a Hero to attack > ")
+        curr_hero_number = input("Pick a Hero to attack > ")
         try:
-            if int(curr_hero) > len(heroes):
+            if int(curr_hero_number) > len(heroes):
                 print(f"Invalid answer, you have only {len(heroes)} heroes")
                 continue
+            else:
+                break
         except ValueError:
             print("Invalid answer, try again.")
             continue
 
-        for hero in heroes:
-            if curr_hero == str(hero.pick):
-                damage = hero.damage
-                damage_type = hero.dmg_type
-                curr_hero = hero
-                break
+    for hero in heroes:
+        if curr_hero_number == str(hero.pick):
+            damage = hero.damage
+            damage_type = hero.dmg_type
+            curr_hero = hero
+            break
 
     time.sleep(0.5)
     print(f"{curr_hero.name} ready to fight, take a moment and ... ", end="")
@@ -62,19 +64,19 @@ def attack():
     if elapsed_time < 0.2:
         print("It was too fast, you miss!!! And lose 30 hp!")
         return [0, 30, 0]
-    if elapsed_time < 0.5:
+    if elapsed_time < 0.48:
         print("COMBOCRIT and +10 hp!!!\nDamage x 3 = ", end="")
         return [3, -10]
-    elif elapsed_time < 0.75:
+    elif elapsed_time < 0.55:
         print("Crit!!!\nDamage x 2 = ", end="")
         return [2, 0]
-    elif elapsed_time < 0.90:
+    elif elapsed_time < 0.70:
         print("Good!\nDamage x 1 = ", end="")
         return [1, 0]
-    elif elapsed_time < 1.0:
+    elif elapsed_time < 0.80:
         print("Norm. You lose 5 hp.\nDamage x 0.8 = ", end="")
         return [0.8, 10]
-    elif elapsed_time < 1.3:
+    elif elapsed_time < 1.0:
         print("Lil bit late, but still ok. You lose 10 hp.\nDamage x0.5 = ", end="")
         return [0.5, 20]
     else:
@@ -125,7 +127,6 @@ def enemy_attack(enemy):
 
 def check_person_stats():
     """Выводит статистику персонажей."""
-    print()
     while True:
         ch = input("Wanna check persons stats? [y/n] >>> ")
         if ch == "y":
@@ -141,6 +142,7 @@ def check_person_stats():
                 print()
             break
         elif ch == "n":
+            print()
             break
         else:
             print("Invalid answer, try again.")
@@ -170,12 +172,15 @@ def use_item(item, hero, enemy):
         enemy.hp -= 300
     elif item == "Strength Poison":
         hero.damage += 20
+    elif item == "Apple":
+        hero.hp += 15
+        hero.damage += 2
 
 
 def wanna_use_item(enemy):
     """Проверяет, хочет ли игрок использовать предмет."""
     if not heroes_items:
-        return
+        return None
 
     while True:
         ch = input("Wanna use an item? [y/n] >>> ")
@@ -206,10 +211,10 @@ def wanna_use_item(enemy):
 
                         for hero in heroes:
                             if choose_hero == str(hero.pick):
-                                ch_hero = hero
+                                choose_hero = hero
                                 break
 
-                        use_item(item, ch_hero, enemy)
+                        use_item(item, choose_hero, enemy)
                         heroes_items.remove(item)
                         return
 
@@ -217,3 +222,25 @@ def wanna_use_item(enemy):
             return
         else:
             print("Invalid answer, try again.")
+
+
+def print_storyline(storyline):
+    if len(storyline) < 90:
+        print(storyline)
+        input("Press Enter to continue...")
+        return None
+    chars_to_new_line = " .,"
+    curr_line = ""
+    # Для вывода сюжета в консоли
+    count = 0
+    for char in storyline:
+        count += 1
+        curr_line += char
+        if count >= 70 and char in chars_to_new_line:
+            count = 0
+            print(curr_line)
+            curr_line = ""
+    print(curr_line)
+    input("Press Enter to continue...")
+    print()
+
