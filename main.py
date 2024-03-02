@@ -1,10 +1,10 @@
 from functions import *
-from creatings_mobs import *
+from creating_objects import *
 
 
-'''print("Created by Alexander Burmitskiy in 2024")
+print("Created by Alexander Burmitskiy in 2024")
 time.sleep(2)
-input("Welcome to the Eldoria...")
+input("Welcome to Eldoria...")
 print()
 
 print_storyline("In the mystical realm of Eldoria, a dark force has cast its"
@@ -19,15 +19,15 @@ print_storyline("You start your journey in the quaint village of Elmsworth."
 
 print_storyline("You are a warrior, equipped with a sword and filled with"
                 " enthusiasm for adventure. Consequently, you head towards the forest.")
-print_storyline("Here you find big spider! Fight him!!!")'''
+print_storyline("Here you find big spider! Fight him!!!")
 
-#battle_with(spider)
+battle_with(spider)
 
 print_storyline("After defeating the spider, you continue onward in search of more adventures"
                 " and to rescue the inhabitants of Eldoria. Along the way, you find an apple and decide to keep it."
-                "(+ 15 hp + 2 damage after eating)")
+                "(+ 30 hp + 2 damage after eating)")
 
-heroes_items.append("Apple")
+hero_items.append("Apple")
 
 print_storyline("You come across the mountains, feeling cold and in need of shelter."
                 " Finding a cave, you decide to enter it when suddenly.")
@@ -36,21 +36,23 @@ print_storyline("A ICE GOLEM EMERGES FROM IT!!!")
 
 battle_with(ice_golem)
 
+print_storyline("After defeating the ice golem, you entered the cave from which it emerged."
+                " In the depth of the cave, you noticed something reflecting the sunlight...")
 
+print_storyline("It was the mighty Frostbane, a great icy power. You decided to take this sword with you."
+                "(+ 10 damage + damage type Frost)")
 
+warrior.damage += 10
+warrior.dmg_type.append("Frost")
 
+print_storyline("The defeat of the Ice Golem reveals a deeper conspiracy. A dragon known as Inferno Dragon"
+                " has been awakened, spreading chaos across the lands of Eldoria. The village of Emberfall"
+                " is under siege, and its people turn to you for salvation.")
 
+print_storyline("Stepping onto the fiery lands, the chill of your sword seems to be your salvation. But suddenly...")
 
+print_storyline("A DRAGON COMES FOR YOU!!!")
 
-
-
-
-
-
-
-
-
-
-
+battle_with(dragon_of_inferno)
 
 

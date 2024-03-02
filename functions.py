@@ -1,10 +1,11 @@
 import random
 import time
-from creatings_mobs import *
+
+from creating_objects import *
 
 
 def have_hp():
-    """Проверяет наличие хитпоинтов у героев."""
+    """Проверяет наличие hp у героев."""
     for hero in heroes:
         if hero.hp <= 0:
             heroes.remove(hero)
@@ -17,9 +18,8 @@ def round_start(enemy):
     for hero in heroes:
         print(f"<{hero.name}>|", sep="", end="")
     print()
-
-    damage = 0
-    damage_type = ""
+    order_in_hero_list()
+    curr_hero = ""
 
     while True:
         curr_hero_number = input("Pick a Hero to attack > ")
@@ -34,17 +34,15 @@ def round_start(enemy):
             continue
 
     for hero in heroes:
-        if curr_hero_number == str(hero.pick):
-            damage = hero.damage
-            damage_type = hero.dmg_type
+        if str(hero.id) == curr_hero_number:
             curr_hero = hero
             break
 
     time.sleep(0.5)
     print(f"{curr_hero.name} ready to fight, take a moment and ... ", end="")
     attack_res = attack()
-    apply_attack_results(curr_hero, enemy, damage, damage_type, attack_res)
-    print(f"Total Damage = {damage * attack_res[0]}")
+    apply_attack_results(curr_hero, enemy, curr_hero.damage, curr_hero.dmg_type, attack_res)
+    print(f"Total Damage = {curr_hero.damage * attack_res[0]}")
     print()
     print(f"Enemy ({enemy.name}) HP Left = {enemy.hp} ")
     print(f"{curr_hero.name} HP Left = {curr_hero.hp}")
@@ -63,8 +61,8 @@ def attack():
 
     if elapsed_time < 0.2:
         print("It was too fast, you miss!!! And lose 30 hp!")
-        return [0, 30, 0]
-    if elapsed_time < 0.48:
+        return [0, 30]
+    elif elapsed_time < 0.48:
         print("COMBOCRIT and +10 hp!!!\nDamage x 3 = ", end="")
         return [3, -10]
     elif elapsed_time < 0.55:
@@ -81,24 +79,24 @@ def attack():
         return [0.5, 20]
     else:
         print("Its was too late, you miss!!! And lose 30 hp!")
-        return [0, 30, 0]
+        return [0, 30]
 
 
 def apply_attack_results(curr_hero, enemy, damage, damage_type, attack_res):
     """Применяет результаты атаки к героям и врагу."""
     curr_hero.hp -= attack_res[1]
 
-    if len(attack_res) != 3:
+    if not attack_res[0]:
         print(damage * attack_res[0])
 
-        if enemy.weak == damage_type:
-            print(f" x 2 (for {enemy.name} weakness)")
-        if enemy.resist == damage_type:
-            print(f" x 0.5 (for {curr_hero.name} weakness)")
+    if enemy.weak in damage_type:
+        print(f" x 2 (for {enemy.name} weakness)")
+    if enemy.resist in damage_type:
+        print(f" x 0.5 (for {curr_hero.name} weakness)")
 
-    if enemy.weak == damage_type:
+    if enemy.weak in damage_type:
         damage *= 2
-    if enemy.resist == damage_type:
+    if enemy.resist in damage_type:
         damage *= 0.5
 
     enemy.hp -= damage * attack_res[0]
@@ -173,26 +171,26 @@ def use_item(item, hero, enemy):
     elif item == "Strength Poison":
         hero.damage += 20
     elif item == "Apple":
-        hero.hp += 15
+        hero.hp += 30
         hero.damage += 2
 
 
 def wanna_use_item(enemy):
     """Проверяет, хочет ли игрок использовать предмет."""
-    if not heroes_items:
+    if not hero_items:
         return None
 
     while True:
         ch = input("Wanna use an item? [y/n] >>> ")
         if ch == "y":
             print("Items:", end="")
-            for item in heroes_items:
+            for item in hero_items:
                 print(f"<{item}>|", end="")
             print()
 
             while True:
                 item = input("Which item do you wanna choose? >>> ")
-                if item not in heroes_items:
+                if item not in hero_items:
                     print("No such item found.")
                 else:
                     for hero in heroes:
@@ -210,12 +208,12 @@ def wanna_use_item(enemy):
                             continue
 
                         for hero in heroes:
-                            if choose_hero == str(hero.pick):
+                            if choose_hero == str(hero.id):
                                 choose_hero = hero
                                 break
 
                         use_item(item, choose_hero, enemy)
-                        heroes_items.remove(item)
+                        hero_items.remove(item)
                         return
 
         elif ch == "n":
@@ -244,3 +242,10 @@ def print_storyline(storyline):
     input("Press Enter to continue...")
     print()
 
+
+def order_in_hero_list():
+    """Присваивает каждому герою свой 'id' для удобного выбора героя."""
+    next_id = 1
+    for hero in heroes:
+        hero.id = next_id
+        next_id += 1
