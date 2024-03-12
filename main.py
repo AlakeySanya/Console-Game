@@ -55,4 +55,21 @@ print_storyline("A DRAGON COMES FOR YOU!!!")
 
 battle_with(dragon_of_inferno)
 
+print_storyline("After that fight you find a man that looks like he wont to go with you."
+                " He have a bow and looks pretty strong. (+new hero archer)")
 
+print_storyline("You rest a lot before go to the next enemy (+ 100 hp to anyone)")
+
+heroes.append(archer)
+
+for hero in heroes:
+    hero.hp += 100
+
+print_storyline("After all that crap that happen you deside to go to the last monster --The Elder--"
+                "and finish him")
+
+print_storyline("LETS GOOOOOOOOOOOOOOO")
+
+battle_with(the_elder)
+
+print("You win!!! Game over.")

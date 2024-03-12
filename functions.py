@@ -23,6 +23,18 @@ def round_start(enemy):
 
     while True:
         curr_hero_number = input("Pick a Hero to attack > ")
+        # Чит код на hp
+        if curr_hero_number == "666":
+            hp = input("How much? > ")
+            for hero in heroes:
+                hero.hp += int(hp)
+            continue
+            # Чит код на damage
+        if curr_hero_number == "777":
+            damage = input("How much? > ")
+            for hero in heroes:
+                hero.damage += int(damage)
+            continue
         try:
             if int(curr_hero_number) > len(heroes):
                 print(f"Invalid answer, you have only {len(heroes)} heroes")
@@ -42,7 +54,12 @@ def round_start(enemy):
     print(f"{curr_hero.name} ready to fight, take a moment and ... ", end="")
     attack_res = attack()
     apply_attack_results(curr_hero, enemy, curr_hero.damage, curr_hero.dmg_type, attack_res)
-    print(f"Total Damage = {curr_hero.damage * attack_res[0]}")
+    total_damage = curr_hero.damage * attack_res[0]
+    if enemy.weak in curr_hero.dmg_type:
+        total_damage *= 2
+    if enemy.resist in curr_hero.dmg_type:
+        total_damage *= 0.5
+    print(f"Total Damage = {total_damage}")
     print()
     print(f"Enemy ({enemy.name}) HP Left = {enemy.hp} ")
     print(f"{curr_hero.name} HP Left = {curr_hero.hp}")
@@ -151,7 +168,10 @@ def battle_with(enemy):
     print()
     check_person_stats()
 
-    while have_hp():
+    while True:
+        if not have_hp():
+            print("You lose. All heroes hp gone...")
+            raise Exception("You Lose")
         round_start(enemy)
         wanna_use_item(enemy)
 

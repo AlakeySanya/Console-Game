@@ -25,8 +25,8 @@ class Hero:
 eikthyr = Enemy("Eikthyr", 50, "Blunt", 1000, "Pierce", ["Slash"])
 
 # Новые идеи боссов
-'''the_elder = Boss("The Elder", [45, "Slash"], 1000, "Slash", ["Magic", "Pierce"])
-bonemass = Boss("Bonemass", [60, "Blunt"], 2000, "Blunt", ["Pierce"])
+the_elder = Enemy("The Elder", 45, ["Slash"], 1000, ["Magic", "Pierce"], ["Slash"])
+'''bonemass = Boss("Bonemass", [60, "Blunt"], 2000, "Blunt", ["Pierce"])
 modir = Boss("Modir", [70, "Frost"], 3000, "Blunt", ["Slash"])
 gullveig = Boss("Gullveig", [100, "Fire"], 4500, "Pierce", ["Blunt"])
 fenrir = Boss("Fenrir", [120, "Slash"], 10000, "Pierce", ["Blunt", "Frost"])
@@ -34,8 +34,8 @@ jotunn = Boss("Jotunn", [200, "Blunt"], 20000, "Blunt", ["Slash", "Pierce"])'''
 
 
 # Создание героев
-warrior = Hero("Warrior", 10, ["Slash"], 200, [], [""])
-archer = Hero("Archer", 20, ["Pierce"], 150, [], [""])
+warrior = Hero("Warrior", 10, ["Slash"], 300, [], [""])
+archer = Hero("Archer", 20, ["Pierce"], 250, [], [""])
 
 # Новые идеи героев
 '''spartan = Hero("Spartan", [35, "Pierce"], 500, ["Slash"])
